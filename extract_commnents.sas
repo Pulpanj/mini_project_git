@@ -1,6 +1,9 @@
 %let nmb=907;
 
-filename in "C:\RTI\SAS\SESUG2009\test&nmb..sas";
+filename in "c:\ajps\learning\mini_project_git\test_stmtm_flow.sas ";
+
+filename out "c:\ajps\learning\mini_project_git\test_stmtm_flow_nocom.sas ";
+
 data old;
 length text $200;
 infile in truncover;
@@ -13,6 +16,7 @@ set old;
 many lines. Note that the program reads one text line at a time and sets all the flags to 0;
 retain open_q 0 open_dq 0 open_c 0 sm 0 c 0 ch 0; 
 * the program processes the text lines one character in a time;
+
 do i=1 to length(text);
 /* This part of the code is searching for comments of the “ *…; ” type */
 if substr(text,i,1)^= '*' and substr(text,i,1)^=' ' then ch=1;
@@ -31,7 +35,7 @@ if ‘c’ or
 starcomment
 was identified. At this point, we reset the ‘c’ flag to 0 and set this ‘;’ to blank*/
 c=0;
-3
+
 substr(text,i,1)= ' ';
 end;
 sm=1; /* since the ‘;’ is found we are setting the ‘sm’ flag to 1 */
@@ -85,7 +89,7 @@ substr(text,i,2)=' ';
 open_c=0;
 end;
 end;
-4
+
 /* This part contains commentremoving
 logic. If comment or starcomment
 is open, and
@@ -102,6 +106,7 @@ if sm=1 and substr(text,i,1)^= ' ' and c^=1 and open_c=0
 and substr(text,i,1)^= ';' then sm=0;
 end;
 run;
+
 /* This data step recreates
 the original SAS program without comments.
 Note that the positions of all SAS statements are unchanged */
